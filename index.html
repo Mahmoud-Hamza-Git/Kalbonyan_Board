@@ -5,40 +5,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>kanban Board</title>
+
+    <!-- linking ion icons -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <!-- linking custom style sheet -->
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <header>
-      <h1>Kanban Board</h1>
-    </header>
     <main class="app">
+      <h1 class="header">Kanban Board</h1>
       <div class="column" id="not-started">
         <h2>Not Started</h2>
-        <div id="tasks-wrapper_1">
-          <textarea name="task" value="New Task" placeholder="new task" class="task"></textarea>
-          <textarea name="task" value="New Task" placeholder="new task" class="task"></textarea>
-          <textarea name="task" value="New Task" placeholder="new task" class="task"></textarea>
-        </div>
-        <button class="btn-add">Add</button>
+        <div class="tasks-list"></div>
+        <button type="button" class="btn-add">+ Add</button>
       </div>
       <div class="column" id="in-progress">
         <h2>In Progress</h2>
-        <div id="tasks-wrapper_2">
-          <textarea name="task" value="New Task" placeholder="new task" class="task"></textarea>
-          <textarea name="task" value="New Task" placeholder="new task" class="task"></textarea>
-          <textarea name="task" value="New Task" placeholder="new task" class="task"></textarea>
-        </div>
-        <button class="btn-add">Add</button>
+        <div class="tasks-list"></div>
+        <button type="button" class="btn-add">+ Add</button>
       </div>
       <div class="column" id="completed">
         <h2>Completed</h2>
-        <div id="tasks-wrapper_3">
-          <textarea name="task" value="New Task" placeholder="new task" class="task"></textarea>
-          <textarea name="task" value="New Task" placeholder="new task" class="task"></textarea>
-          <textarea name="task" value="New Task" placeholder="new task" class="task"></textarea>
-        </div>
-        <button class="btn-add">Add</button>
+        <div class="tasks-list"></div>
+        <button type="button" class="btn-add">+ Add</button>
       </div>
     </main>
   </body>
+  <script src="index.js" defer></script>
 </html>

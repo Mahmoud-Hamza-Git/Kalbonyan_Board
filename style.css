@@ -12,22 +12,22 @@ body {
   font-size: 14px;
   font-weight: 500;
   line-height: 1;
-}
-
-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  height: 100px;
-  font-size: 20px;
-  font-weight: 900;
+  color: #eee;
 }
 
 .app {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  align-items: center;
+  align-items: start;
+  background-color: #009578;
+}
+
+.header {
+  grid-column: 1/-1;
+  text-align: center;
+  padding: 5rem 0;
+  font-size: 4rem;
+  font-weight: 900;
 }
 
 .column {
@@ -35,41 +35,129 @@ header {
   justify-content: center;
   flex-direction: column;
 
-  width: 90%;
-  gap: 20px;
-  padding: 10px 20px;
+  width: 100%;
+  gap: 1rem;
+  padding: 0 1rem;
+  margin-bottom: 3rem;
 }
 
 .column h2 {
-  font-size: 20px;
+  font-size: 2.8rem;
   font-weight: 700;
-  /* margin-bottom: 20px; */
+  margin-bottom: 2rem;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  padding: 0.5rem;
+}
+/* .tasks-list::-webkit-scrollbar {
+  display: none;
+} */
+
+.task-wrapper {
+  position: relative;
+}
+.task-wrapper:hover .task-icons {
+  display: flex;
+}
+
+.task-icons {
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  height: 4rem;
+  margin-right: 1rem;
+  font-size: 2.5rem;
+
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+}
+.task-icons ion-icon:first-child {
+  cursor: pointer;
+  color: #4c6ef5;
+}
+.task-icons ion-icon:last-child {
+  cursor: pointer;
+  color: #fa5252;
 }
 
 textarea {
   resize: none;
-  height: 20px;
+  min-height: 4rem;
+  height: 4rem;
   width: 100%;
-  border-radius: 10px;
-  padding: 0.5px 10px;
+  border-radius: 8px;
+  padding: 1rem 6rem 1rem 1.5rem;
+  font-size: 2rem;
+  border: none;
+  cursor: move;
 }
-
-/* Hide scrollbar for Chrome, Safari and Opera */
+textarea:last-child {
+  margin-bottom: 1rem;
+}
+textarea:focus {
+  outline: none;
+}
+.focus:focus {
+  cursor: initial;
+  box-shadow: 0 5px 10px #000;
+}
 textarea::-webkit-scrollbar {
-  display: none;
+  display: none; /* Hide scrollbar */
 }
 
-/* Hide scrollbar for IE, Edge and Firefox */
-textarea {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
-
+/* BUTTONS */
 .btn-add {
   width: 100%;
+  font-size: 2rem;
+  padding: 1rem 1.5rem;
   border: none;
-  background-color: transparent;
-  border-radius: 20px;
+  background-color: #00866c;
+  border-radius: 10px;
   color: #fff;
-  box-shadow: 0 2px 5px 4px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 5px #ffffff4d;
+  cursor: pointer;
+}
+.btn-add:active {
+  background-color: #007760;
+  box-shadow: 5px 5px 10px #ffffff4d;
+}
+
+.dragging {
+  scale: 1.05;
+}
+.dragging .task {
+  background-color: #0000009c;
+  color: #fff;
+}
+
+/**************************/
+/* BELOW 800px  */
+/**************************/
+@media (max-width: 50em) {
+  .app {
+    grid-template-columns: 1fr;
+    padding: 0 6rem;
+  }
+  html {
+    font-size: 56.25%;
+  }
+}
+
+/**************************/
+/* BELOW 500px  */
+/**************************/
+@media (max-width: 31.25em) {
+  .app {
+    padding: 0 2rem;
+  }
+  html {
+    font-size: 50%;
+  }
 }
