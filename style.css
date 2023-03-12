@@ -52,7 +52,7 @@ body {
   flex-direction: column;
   gap: 2rem;
 
-  padding: 0.5rem;
+  padding: 2rem 0.5rem;
 }
 /* .tasks-list::-webkit-scrollbar {
   display: none;
@@ -70,7 +70,7 @@ body {
   right: 0;
   top: 0;
 
-  height: 4rem;
+  height: 5rem;
   margin-right: 1rem;
   font-size: 2.5rem;
 
@@ -87,28 +87,27 @@ body {
   color: #fa5252;
 }
 
-textarea {
-  resize: none;
+.task {
   min-height: 4rem;
-  height: 4rem;
+  height: 5rem;
   width: 100%;
   border-radius: 8px;
   padding: 1rem 6rem 1rem 1.5rem;
-  font-size: 2rem;
+  font-size: 2.2rem;
   border: none;
   cursor: move;
 }
-textarea:last-child {
+.task:last-child {
   margin-bottom: 1rem;
 }
-textarea:focus {
+.task:focus {
   outline: none;
 }
 .focus:focus {
   cursor: initial;
   box-shadow: 0 5px 10px #000;
 }
-textarea::-webkit-scrollbar {
+.task::-webkit-scrollbar {
   display: none; /* Hide scrollbar */
 }
 
@@ -124,9 +123,10 @@ textarea::-webkit-scrollbar {
   box-shadow: 0 3px 5px #ffffff4d;
   cursor: pointer;
 }
-.btn-add:active {
+.btn-add:active,
+.btn-add:hover {
   background-color: #007760;
-  box-shadow: 5px 5px 10px #ffffff4d;
+  box-shadow: 2px 5px 10px #ffffff4d;
 }
 
 .dragging {
