@@ -1,6 +1,6 @@
 const btns = document.querySelectorAll('.btn-add');
-const tasksLists = document.querySelectorAll('.tasks-list');
 const droppables = document.querySelectorAll('.tasks-list');
+let timeout;
 
 const init = () => {
   // restore all saved content from localStorage
@@ -30,7 +30,7 @@ const init = () => {
     });
   });
 
-  tasksLists.forEach((list) => {
+  droppables.forEach((list) => {
     // listenfocus-out on cards
     list.addEventListener('focusout', (e) => {
       // check if the element contains 'focus' class before we store it's value
@@ -72,6 +72,7 @@ function createNewTask(parent) {
   // select the last created task
   const task = parent.querySelector('.task-wrapper:last-child');
   addStartEndDragListener(task);
+  addStartEndTouchListener(task);
 }
 
 function handleClickTask(target) {
@@ -99,6 +100,56 @@ function addStartEndDragListener(task) {
   });
 }
 
+function addStartEndTouchListener(task) {
+  // handle long touch on task
+  task.addEventListener('touchstart', (e) => {
+    timeout = setTimeout(() => {
+      task.style.position = 'absolute';
+      task.classList.add('dragging');
+      task.style.top = `${e.touches[0].clientY - task.offsetHeight / 2}px`;
+      task.style.left = `${e.touches[0].clientX - task.offsetWidth / 2}px`;
+    }, 500);
+  });
+
+  // handle touchEnd
+  task.addEventListener('touchend', (e) => {
+    if (timeout) {
+      clearTimeout(timeout);
+    }
+
+    if (task.classList.contains('dragging')) {
+      task.style.position = 'relative';
+      task.style.top = `auto`;
+      task.style.left = `auto`;
+      task.classList.remove('dragging');
+      store();
+    }
+  });
+
+  // handlle touch moving over task containers to drop task
+  task.addEventListener('touchmove', (e) => {
+    if (task.classList.contains('dragging')) {
+      task.style.top = `${e.touches[0].clientY - task.offsetHeight / 2}px`;
+      task.style.left = `${e.touches[0].clientX - task.offsetWidth / 2}px`;
+
+      // detect all elements that touch moves over.
+      const elements = document.elementsFromPoint(e.touches[0].clientX, e.touches[0].clientY);
+      elements.forEach((el, i) => {
+        if (el.classList.contains('tasks-list')) {
+          const track = el;
+          const bottomTask = insertAbove(track, e.touches[0].clientY);
+          const curTask = document.querySelector('.dragging');
+          if (!bottomTask) {
+            track.appendChild(curTask);
+          } else {
+            track.insertBefore(curTask, bottomTask);
+          }
+        }
+      });
+    }
+  });
+}
+
 function insertAbove(track, mouseY) {
   //selects all the tasks not dragged in the the current track
   const notDraggedTasks = track.querySelectorAll('.task-wrapper:not(.dragging');
@@ -120,10 +171,9 @@ function insertAbove(track, mouseY) {
 function store() {
   droppables.forEach((container) => {
     const key = container.id;
-    const values = [];
-    for (const child of container.children) {
-      values.push(child.firstElementChild.value);
-    }
+    const values = container.children.map((child) => {
+      return child.firstElementChild.value;
+    });
     window.localStorage.setItem(key, values.toString());
   });
 }
@@ -132,7 +182,7 @@ function print(track, values) {
   values.forEach((element) => {
     const html = `
     <div class="task-wrapper" draggable="true">
-      <input name="task" placeholder="new task" value="${element}" class="task"></input>
+      <input name="task" placeholder="new task" readonly value="${element}" class="task"></input>
       <div class="task-icons">
         <ion-icon name="create"></ion-icon>
         <ion-icon name="trash"></ion-icon>
@@ -143,6 +193,7 @@ function print(track, values) {
     // add drag listener for tasks printend on the screen
     const task = track.querySelector('.task-wrapper:last-child');
     addStartEndDragListener(task);
+    addStartEndTouchListener(task);
   });
 }
 init();
